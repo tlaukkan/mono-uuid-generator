@@ -325,7 +325,8 @@ namespace Jug
         {
             byte[] contents = new byte[16];
 
-            addr.GetAddressBytes();
+			  var addrBytes = addr.GetAddressBytes();
+				Array.ConstrainedCopy(addrBytes, 0, contents, 10, addrBytes.Length);
 
             lock (mTimerLock)
             {
