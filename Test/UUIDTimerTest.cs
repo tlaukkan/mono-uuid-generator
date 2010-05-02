@@ -20,6 +20,7 @@ using Jug;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography;
+using System.Diagnostics;
 
 namespace Jug.Test
 {
@@ -145,6 +146,8 @@ namespace Jug.Test
             // before generating all the uuid timer arrays, get the start time
             long start_time = Environment.TickCount;
 
+				Stopwatch timer = Stopwatch.StartNew();
+
             // now create the array of uuid timer output arrays
             for (int i = 0; i < array_of_uuid_timer_byte_arrays.Length; i++)
             {
@@ -152,8 +155,10 @@ namespace Jug.Test
                 uuid_timer.GetTimestamp(array_of_uuid_timer_byte_arrays[i]);
             }
 
+				timer.Stop();
+
             // now capture the end time
-            long end_time = Environment.TickCount;
+            long end_time = start_time + timer.ElapsedTicks;
 
             // convert the array into array of longs holding the numerical values
             long[] uuid_timer_array_of_longs =

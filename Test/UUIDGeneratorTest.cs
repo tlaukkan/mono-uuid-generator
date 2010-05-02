@@ -20,6 +20,7 @@ using Jug;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography;
+using System.Diagnostics;
 
 namespace Jug.Test
 {
@@ -304,14 +305,19 @@ namespace Jug.Test
             // before we generate all the uuids, lets get the start time
             long start_time = Environment.TickCount;
 
+            // high-resolution timer
+            Stopwatch timer = Stopwatch.StartNew();
+            
             // now create the array of uuids
             for (int i = 0; i < uuid_array.Length; i++)
             {
                 uuid_array[i] = uuid_gen.GenerateTimeBasedUUID();
             }
 
+            timer.Stop();
+            
             // now capture the end time
-            long end_time = Environment.TickCount;
+            long end_time = start_time + timer.ElapsedTicks;
 
             // check that none of the UUIDs are null
             checkUUIDArrayForNonNullUUIDs(uuid_array);
@@ -371,14 +377,19 @@ namespace Jug.Test
             // before we generate all the uuids, lets get the start time
             long start_time = Environment.TickCount;
 
+            // high-resolution timer
+            Stopwatch timer = Stopwatch.StartNew();
+
             // now create the array of uuids
             for (int i = 0; i < uuid_array.Length; i++)
             {
                 uuid_array[i] = uuid_gen.GenerateTimeBasedUUID(ethernet_address);
             }
 
+				timer.Stop();
+			   
             // now capture the end time
-            long end_time = Environment.TickCount;
+				long end_time = start_time + timer.ElapsedTicks;
 
             // check that none of the UUIDs are null
             checkUUIDArrayForNonNullUUIDs(uuid_array);
